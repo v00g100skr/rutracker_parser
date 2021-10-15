@@ -38,6 +38,7 @@ def send_message(message):
 
 def main():
     for feed_url in FEED_URLS:
+        logger.info('RUN %s' % (feed_url))
         rss_feed = feedparser.parse(feed_url)
 
         for entry in rss_feed.entries:
@@ -55,6 +56,7 @@ def main():
                 data =[(entry.title, parsed_date)]
                 cursor.executemany("INSERT INTO entities VALUES (?,?)", data)
                 conn.commit()
+        logger.info('END %s' % (feed_url))
 
 if __name__ == "__main__":
     main()
