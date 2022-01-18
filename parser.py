@@ -51,7 +51,7 @@ def main():
 
             if not result:
                 logger.info(entry.title)
-                message = '<b>%s</b>\n\n%s\n\n%s' % (entry.tags[0].label, entry.title, entry.links[0].href)
+                message = '<b>%s</b>\n\n%s\n\n%s' % (entry.title, entry.tags[0].label, entry.links[0].href)
                 send_message(message)
                 data =[(entry.title, parsed_date)]
                 cursor.executemany("INSERT INTO entities VALUES (?,?)", data)
