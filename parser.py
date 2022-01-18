@@ -16,7 +16,7 @@ BOT_TOKEN = config['BOT_TOKEN']
 CHANNEL_ID = config['CHANNEL_ID']
 FEED_URLS = config['FEED_URLS']
 
-conn = sqlite3.connect("parser.db")  # или :memory: чтобы сохранить в RAM
+conn = sqlite3.connect("parser.db")
 cursor = conn.cursor()
 
 logger = logging.getLogger('main')
