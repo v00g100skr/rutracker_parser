@@ -3,18 +3,13 @@ import requests
 import feedparser
 import sqlite3
 import logging
-import yaml
+import os
+import asyncio
 
-try:
-    with open("local.yml", 'r') as stream:
-        config = yaml.safe_load(stream)
-except:
-    with open("config.yml", 'r') as stream:
-        config = yaml.safe_load(stream)
 
-BOT_TOKEN = config['BOT_TOKEN']
-CHANNEL_ID = config['CHANNEL_ID']
-FEED_URLS = config['FEED_URLS']
+BOT_TOKEN = os.environ.get('BOT_TOKEN') or 'bot_token'
+CHANNEL_ID = os.environ.get('CHANNEL_ID') or 'chanelid'
+FEED_URLS = os.environ.get('FEED_URLS') or []
 
 conn = sqlite3.connect("parser.db")
 cursor = conn.cursor()
@@ -36,8 +31,8 @@ def send_message(message):
     requests.get(f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHANNEL_ID}&text={message}&parse_mode=html&disable_web_page_preview=True')
 
 
-def main():
-    for feed_url in FEED_URLS:
+async def main():
+    for feed_url in FEED_URLS.split(','):
         logger.info('RUN %s' % (feed_url))
         rss_feed = feedparser.parse(feed_url)
 
@@ -57,6 +52,17 @@ def main():
                 cursor.executemany("INSERT INTO entities VALUES (?,?)", data)
                 conn.commit()
         logger.info('END %s' % (feed_url))
+        await asyncio.sleep(1200)
+
 
 if __name__ == "__main__":
-    main()
+    loop = asyncio.get_event_loop()
+
+    asyncio.ensure_future(main())
+
+    try:
+        loop.run_forever()
+    except KeyboardInterrupt:
+        pass
+
+    loop.close()

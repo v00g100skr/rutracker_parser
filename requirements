@@ -1,4 +1,4 @@
-pyymaml
 feedparser
 python-dateutil
 requests
+aiohttp
