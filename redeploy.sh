@@ -1,23 +1,23 @@
 #!/bin/bash
 
 # Default values
-ALERT_TOKEN=""
-WEATHER_TOKEN=""
-ETRYVOGA_HOST=""
+BOT_TOKEN=""
+CHANNEL_ID=""
+FEED_URLS=""
 
 # Check for arguments
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -a|--alert-token)
-            ALERT_TOKEN="$2"
+        -b|--alert-token)
+            BOT_TOKEN="$2"
             shift 2
             ;;
-        -w|--weather-token)
-            WEATHER_TOKEN="$2"
+        -c|--weather-token)
+            CHANNEL_ID="$2"
             shift 2
             ;;
-        -e|--etryvoga-host)
-            ETRYVOGA_HOST="$2"
+        -f|--etryvoga-host)
+            FEED_URLS="$2"
             shift 2
             ;;
         *)
@@ -28,8 +28,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 echo "BOT_TOKEN: $BOT_TOKEN"
-echo "WEATHER_TOKEN: $WEATHER_TOKEN"
-echo "ETRYVOGA_HOST: $ETRYVOGA_HOST"
+echo "CHANNEL_ID: $CHANNEL_ID"
+echo "FEED_URLS: $FEED_URLS"
 
 # Updating the Git repo
 echo "Updating Git repo..."
