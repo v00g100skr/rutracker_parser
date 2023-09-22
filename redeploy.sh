@@ -51,7 +51,7 @@ docker rm rutracker_parser || true
 
 # Deploying the new container
 echo "Deploying new container..."
-docker run --name rutracker_parser --restart unless-stopped -d --env BOT_TOKEN="$BOT_TOKEN" --env CHANNEL_ID="$CHANNEL_ID" --env FEED_URLS="$FEED_URLS" rutracker_parser
+docker run --name rutracker_parser --restart unless-stopped -d -v rutracker_parser_data:/ --env BOT_TOKEN="$BOT_TOKEN" --env CHANNEL_ID="$CHANNEL_ID" --env FEED_URLS="$FEED_URLS" rutracker_parser
 
 echo "Container deployed successfully!"
 
