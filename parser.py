@@ -11,12 +11,12 @@ BOT_TOKEN = os.environ.get('BOT_TOKEN') or 'bot_token'
 CHANNEL_ID = os.environ.get('CHANNEL_ID') or 'chanelid'
 FEED_URLS = os.environ.get('FEED_URLS') or []
 
-conn = sqlite3.connect("parser.db")
+conn = sqlite3.connect("/data/parser.db")
 cursor = conn.cursor()
 
 logger = logging.getLogger('main')
 logger.setLevel(logging.DEBUG)
-fh = logging.FileHandler('parser.log')
+fh = logging.FileHandler('/data/parser.log')
 fh.setLevel(logging.INFO)
 ch = logging.StreamHandler()
 ch.setLevel(logging.DEBUG)
