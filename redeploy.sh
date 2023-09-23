@@ -4,20 +4,25 @@
 BOT_TOKEN=""
 CHANNEL_ID=""
 FEED_URLS=""
+SLEEP_TIME=""
 
 # Check for arguments
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        -b|--alert-token)
+        -b|--bot-token)
             BOT_TOKEN="$2"
             shift 2
             ;;
-        -c|--weather-token)
+        -c|--channel-id)
             CHANNEL_ID="$2"
             shift 2
             ;;
-        -f|--etryvoga-host)
+        -f|--feed-urls)
             FEED_URLS="$2"
+            shift 2
+            ;;
+        -s|--sleep-time)
+            SLEEP_TIME="$2"
             shift 2
             ;;
         *)
@@ -30,15 +35,19 @@ done
 echo "BOT_TOKEN: $BOT_TOKEN"
 echo "CHANNEL_ID: $CHANNEL_ID"
 echo "FEED_URLS: $FEED_URLS"
+echo "SLEEP_TIME: $SLEEP_TIME"
 
 # Updating the Git repo
 echo "Updating Git repo..."
 #cd /path/to/your/git/repo
-git pull
+#git pull
 
 # Moving to the deployment directory
 echo "Moving to deployment directory..."
 #cd /deploy/tcp_server
+
+echo "Create volume..."
+docker volume create rutracker_parser_data
 
 # Building Docker image
 echo "Building Docker image..."
@@ -49,9 +58,11 @@ echo "Stopping and removing old container..."
 docker stop rutracker_parser || true
 docker rm rutracker_parser || true
 
+
+
 # Deploying the new container
 echo "Deploying new container..."
-docker run --name rutracker_parser --restart unless-stopped -d -v rutracker_parser_data:/data --env BOT_TOKEN="$BOT_TOKEN" --env CHANNEL_ID="$CHANNEL_ID" --env FEED_URLS="$FEED_URLS" rutracker_parser
+docker run --name rutracker_parser --restart unless-stopped -d -v rutracker_parser_data:/parser_data --env SLEEP_TIME="$SLEEP_TIME" --env BOT_TOKEN="$BOT_TOKEN" --env CHANNEL_ID="$CHANNEL_ID" --env FEED_URLS="$FEED_URLS" rutracker_parser
 
 echo "Container deployed successfully!"
 
