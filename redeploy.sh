@@ -4,7 +4,7 @@
 BOT_TOKEN=""
 CHANNEL_ID=""
 FEED_URLS=""
-SLEEP_TIME=""
+SLEEP_TIME=1200
 
 # Check for arguments
 while [[ $# -gt 0 ]]; do
