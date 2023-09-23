@@ -40,7 +40,7 @@ echo "SLEEP_TIME: $SLEEP_TIME"
 # Updating the Git repo
 echo "Updating Git repo..."
 #cd /path/to/your/git/repo
-#git pull
+git pull
 
 # Moving to the deployment directory
 echo "Moving to deployment directory..."
