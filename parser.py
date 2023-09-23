@@ -50,7 +50,7 @@ async def main():
                 sql = "SELECT * FROM entities WHERE title=?"
                 cursor.execute(sql, [(entry.title)])
                 result = cursor.fetchone()
-                logger.debug(entry.title)
+                #logger.debug(entry.title)
 
                 if not result:
                     logger.info(entry.title)
